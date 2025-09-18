@@ -444,7 +444,7 @@ const MLMPPage: React.FC = () => {
         startsWithArticle: /^(the|a|an|le|la|les|un|une|des)\s/i.test(text) ? 1 : 0,
         endsWithStop: /\s(of|and|or|with|in|on|at|to|for|de|du|des|et|ou|avec|dans|sur|à|pour)\s*$/i.test(text) ? 1 : 0,
         avgTokenLen: text.split(' ').reduce((sum, token) => sum + token.length, 0) / text.split(' ').length,
-        hasFrenchWords: FRENCH_DESCRIPTIVE_WORDS.some(word => text.toLowerCase().includes(word)) ? 1 : 0
+        fontSizeRatio: 1.0 // Manual candidates get default font ratio
       },
       confidence: databaseMatch ? 0.9 + databaseMatch.confidence_boost : 0.8, // Higher confidence if database match found
       status: 'pending',
