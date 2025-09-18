@@ -141,9 +141,11 @@ export async function POST(request: NextRequest) {
       )
 
       // Update candidates with ML confidence
-      allCandidates.forEach((candidate, index) => {
-        candidate.confidence = predictions[index]
-      })
+      if (predictions) {
+        allCandidates.forEach((candidate, index) => {
+          candidate.confidence = predictions[index]
+        })
+      }
 
       // Sort by ML confidence
       allCandidates.sort((a, b) => b.confidence - a.confidence)
