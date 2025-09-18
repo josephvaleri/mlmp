@@ -34,7 +34,7 @@ export async function findEntreeMatch(text: string): Promise<EntreeMatch | null>
     
     // Test database connection first
     console.log(`🔌 Testing database connection...`)
-    const { data: testData, error: testError } = await supabase
+    const { error: testError } = await supabase
       .from('common_entrees')
       .select('count')
       .limit(1)
@@ -133,7 +133,7 @@ export async function findEntreeMatch(text: string): Promise<EntreeMatch | null>
     return null
   } catch (error) {
     console.error('❌ Error looking up entree in database:', error)
-    console.error('Error details:', error.message)
+    console.error('Error details:', error instanceof Error ? error.message : String(error))
     return null
   }
 }

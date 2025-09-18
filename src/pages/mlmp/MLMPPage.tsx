@@ -3,7 +3,6 @@ import { supabase } from '../../lib/supabase'
 import { createOcrProvider } from '../../lib/ocr'
 import { pdfToImages } from '../../lib/pdf/pdfToImages'
 import { extractCandidates, normalizeCandidateText, validateEntreeName } from '../../lib/candidates'
-import { FRENCH_DESCRIPTIVE_WORDS } from '../../lib/candidates/regex'
 import { loadLatestModel } from '../../lib/ml'
 import { saveUserFeedback, saveCandidatePredictions, triggerRetrainingIfNeeded, getLearningStats } from '../../lib/learning/feedback'
 import type { OcrResult } from '../../lib/ocr/OcrProvider'
@@ -445,9 +444,9 @@ const MLMPPage: React.FC = () => {
         endsWithStop: /\s(of|and|or|with|in|on|at|to|for|de|du|des|et|ou|avec|dans|sur|à|pour)\s*$/i.test(text) ? 1 : 0,
         avgTokenLen: text.split(' ').reduce((sum, token) => sum + token.length, 0) / text.split(' ').length,
         fontSizeRatio: 1.0, // Manual candidates get default font ratio
-        prevLineHeader: 0, // Manual candidates don't have context
-        confidence: databaseMatch ? 0.9 + databaseMatch.confidence_boost : 0.8
+        prevLineHeader: 0 // Manual candidates don't have context
       },
+      confidence: databaseMatch ? 0.9 + databaseMatch.confidence_boost : 0.8,
       status: 'pending',
       databaseMatch: databaseMatch || undefined
     }

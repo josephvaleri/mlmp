@@ -56,8 +56,8 @@ export async function collectTrainingData(): Promise<TrainingData[]> {
     // Transform the data into training format
     const trainingData: TrainingData[] = predictions.map(pred => ({
       features: pred.features as CandidateFeatures,
-      label: pred.mlmp_labels.label as 'approve' | 'deny' | 'edit',
-      edited_text: pred.mlmp_labels.edited_text,
+      label: pred.mlmp_labels[0]?.label as 'approve' | 'deny' | 'edit',
+      edited_text: pred.mlmp_labels[0]?.edited_text,
       text: pred.text
     }))
 

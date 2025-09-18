@@ -130,13 +130,13 @@ export async function POST(request: NextRequest) {
 
       // Extract candidates
       const pageCandidates = extractCandidates(ocrResult.lines, pageIndex + 1)
-      allCandidates.push(...pageCandidates)
+      allCandidates.push(...(await pageCandidates))
     }
 
     // Apply ML model if available
     try {
       const mlModel = await loadLatestModel()
-      const predictions = await mlModel.batchPredict(
+      const predictions = await mlModel?.batchPredict(
         allCandidates.map(c => ({ features: c.features, text: c.text }))
       )
 

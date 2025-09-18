@@ -46,16 +46,16 @@ export async function prepareTrainingData(): Promise<{
   for (const pred of predictionsWithLabels) {
     // Convert user action to binary label
     let label: number
-    if (pred.mlmp_labels.label === 'approve' || pred.mlmp_labels.label === 'edit') {
+    if (pred.mlmp_labels[0]?.label === 'approve' || pred.mlmp_labels[0]?.label === 'edit') {
       label = 1 // Positive (is an entree)
-    } else if (pred.mlmp_labels.label === 'deny') {
+    } else if (pred.mlmp_labels[0]?.label === 'deny') {
       label = 0 // Negative (not an entree)
     } else {
       continue // Skip unknown labels
     }
 
     // Use edited text if available, otherwise use original text
-    const finalText = pred.mlmp_labels.edited_text || pred.text
+    const finalText = pred.mlmp_labels[0]?.edited_text || pred.text
 
     trainingSamples.push({
       features: pred.features,
